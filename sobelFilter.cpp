@@ -9,15 +9,14 @@ const int y[3][3] = {{-1,-2,-1}, {0,0,0}, {1,2,1}};
 
 int xGradient(cv::Mat image, int i, int j){
     
-    return  (x[0][0]*(int)image.at<uchar>(j, i    )) + (x[0][1]*(int)image.at<uchar>(j + 1, i    ))  + (x[0][2]*(int)image.at<uchar>(j + 2, i    )) +
-            (x[1][0]*(int)image.at<uchar>(j, i + 1)) + (x[1][1]*(int)image.at<uchar>(j + 1, i + 1))  + (x[1][2]*(int)image.at<uchar>(j + 2, i + 1)) +
-            (x[2][0]*(int)image.at<uchar>(j, i + 2)) + (x[2][1]*(int)image.at<uchar>(j + 1, i + 2))  + (x[2][2]*(int)image.at<uchar>(j + 2, i + 2));
+    return  (x[0][0]*(int)image.at<uchar>(j, i    )) + (x[0][2]*(int)image.at<uchar>(j + 2, i    )) +
+            (x[1][0]*(int)image.at<uchar>(j, i + 1)) + (x[1][2]*(int)image.at<uchar>(j + 2, i + 1)) +
+            (x[2][0]*(int)image.at<uchar>(j, i + 2)) + (x[2][2]*(int)image.at<uchar>(j + 2, i + 2));
 }
 
 int yGradient (cv::Mat image, int i, int j){
 
     return  (y[0][0]*(int)image.at<uchar>(j, i    )) + (y[0][1]*(int)image.at<uchar>(j + 1, i    ))  + (y[0][2]*(int)image.at<uchar>(j + 2, i    )) +
-            (y[1][0]*(int)image.at<uchar>(j, i + 1)) + (y[1][1]*(int)image.at<uchar>(j + 1, i + 1))  + (y[1][2]*(int)image.at<uchar>(j + 2, i + 1)) +
             (y[2][0]*(int)image.at<uchar>(j, i + 2)) + (y[2][1]*(int)image.at<uchar>(j + 1, i + 2))  + (y[2][2]*(int)image.at<uchar>(j + 2, i + 2));
 }
 
