@@ -1,5 +1,6 @@
 #include <cmath>
 #include <iostream>
+#include <chrono>
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
 
@@ -43,8 +44,16 @@ cv::Mat sobelTransform(const cv::Mat& inputImage){
 
 int main(int argc, char** argv){
     
+    //Load cats image in greyscale
     const cv::Mat initialImage = cv::imread("Cats.jpg", cv::IMREAD_GRAYSCALE);
+    //Apply filter
+    std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
     const cv::Mat finalImage = sobelTransform(initialImage);
+    std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
+    //Calculate filter execution time
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>( t2 - t1 ).count();
+    std::cout << duration << " miliseconds\n";
+    //Display filtered image with OpenCV
     cv::namedWindow("Sobel Filter", cv::WINDOW_AUTOSIZE);
     cv::imshow("Sobel Filter", finalImage);
     cv::imwrite("CatsBorders.jpg",finalImage);
