@@ -8,19 +8,6 @@
 const int x[3][3] = {{-1,0,1}, {-2,0,2}, {-1,0,1}};
 const int y[3][3] = {{-1,-2,-1}, {0,0,0}, {1,2,1}};
 
-int xGradient(cv::Mat image, int i, int j){
-    
-    return  (x[0][0]*(int)image.at<uchar>(j, i    )) + (x[0][2]*(int)image.at<uchar>(j + 2, i    )) +
-            (x[1][0]*(int)image.at<uchar>(j, i + 1)) + (x[1][2]*(int)image.at<uchar>(j + 2, i + 1)) +
-            (x[2][0]*(int)image.at<uchar>(j, i + 2)) + (x[2][2]*(int)image.at<uchar>(j + 2, i + 2));
-}
-
-int yGradient (cv::Mat image, int i, int j){
-
-    return  (y[0][0]*(int)image.at<uchar>(j, i    )) + (y[0][1]*(int)image.at<uchar>(j + 1, i    ))  + (y[0][2]*(int)image.at<uchar>(j + 2, i    )) +
-            (y[2][0]*(int)image.at<uchar>(j, i + 2)) + (y[2][1]*(int)image.at<uchar>(j + 1, i + 2))  + (y[2][2]*(int)image.at<uchar>(j + 2, i + 2));
-}
-
 cv::Mat sobelTransform(const cv::Mat& inputImage){
 
     cv::Mat filteredImage = cv::Mat::zeros(inputImage.size(), inputImage.type());
@@ -29,9 +16,14 @@ cv::Mat sobelTransform(const cv::Mat& inputImage){
     for (int j = 0; j < inputImage.rows-2;  ++j) {
         for (int i = 0;  i < inputImage.cols-2;  ++i) {
             // Calculate X gradient of pixel
-            int xValOfPixel = xGradient(inputImage, i, j);
+            int xValOfPixel = 
+                (x[0][0]*(int)inputImage.at<uchar>(j, i    )) + (x[0][2]*(int)inputImage.at<uchar>(j + 2, i    )) +
+                (x[1][0]*(int)inputImage.at<uchar>(j, i + 1)) + (x[1][2]*(int)inputImage.at<uchar>(j + 2, i + 1)) +
+                (x[2][0]*(int)inputImage.at<uchar>(j, i + 2)) + (x[2][2]*(int)inputImage.at<uchar>(j + 2, i + 2));
             // Calculate Y gradient of pixel
-            int yValOfPixel = yGradient(inputImage, i, j);
+            int yValOfPixel = 
+                (y[0][0]*(int)inputImage.at<uchar>(j, i    )) + (y[0][1]*(int)inputImage.at<uchar>(j + 1, i    ))  + (y[0][2]*(int)inputImage.at<uchar>(j + 2, i    )) +
+                (y[2][0]*(int)inputImage.at<uchar>(j, i + 2)) + (y[2][1]*(int)inputImage.at<uchar>(j + 1, i + 2))  + (y[2][2]*(int)inputImage.at<uchar>(j + 2, i + 2));
             // Calculate magnitude (absolute aproximation)
             int sum = std::clamp(std::abs(xValOfPixel) + std::abs(yValOfPixel), 0, 255);
 
